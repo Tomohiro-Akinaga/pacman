@@ -21,6 +21,23 @@ class Boundary {
   }
 }
 
-const boundary = new Boundary({ position: { x: 0, y: 0 } });
+const map = [
+  ["-", "-", "-", "-", "-", "-"],
+  ["-", " ", " ", " ", " ", "-"],
+  ["-", " ", " ", " ", " ", "-"],
+  ["-", "-", "-", "-", "-", "-"],
+];
 
-boundary.draw();
+const boundaries: Boundary[] = [];
+
+map.forEach((raw, i) => {
+  raw.forEach((symbol, j) => {
+    switch (symbol) {
+      case "-":
+        boundaries.push(new Boundary({ position: { x: 40 * j, y: 40 * i } }));
+        break;
+    }
+  });
+});
+
+boundaries.forEach((boundary) => boundary.draw());
