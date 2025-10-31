@@ -4,9 +4,6 @@ if (!canvas)
 const ctx = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
-// Make canvas focusable for keyboard events
-canvas.focus();
-canvas.addEventListener("click", () => canvas.focus());
 class Boundary {
     position;
     width;
@@ -72,6 +69,7 @@ map.forEach((raw, i) => {
 });
 function animate() {
     requestAnimationFrame(animate);
+    boundaries.forEach((boundary) => boundary.draw());
     player.update();
 }
 animate();
@@ -90,18 +88,6 @@ window.addEventListener("keydown", ({ key }) => {
             break;
         case "d":
             player.velocity.x = 5;
-            break;
-    }
-});
-window.addEventListener("keyup", ({ key }) => {
-    switch (key) {
-        case "w":
-        case "s":
-            player.velocity.y = 0;
-            break;
-        case "a":
-        case "d":
-            player.velocity.x = 0;
             break;
     }
 });
