@@ -26,6 +26,27 @@ class Boundary {
   }
 }
 
+class Player {
+  position: { x: number; y: number };
+  velocity: { x: number; y: number };
+  radius: number;
+
+  constructor({ position, velocity }: { position: { x: number; y: number }; velocity: { x: number; y: number } }) {
+    this.position = position;
+    this.velocity = velocity;
+    this.radius = 10;
+  }
+
+  draw() {
+    if (!ctx) throw new Error("2D context not found");
+    ctx.beginPath();
+    ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+    ctx.closePath();
+  }
+}
+
 const map = [
   ["-", "-", "-", "-", "-", "-"],
   ["-", " ", " ", " ", " ", "-"],
@@ -35,6 +56,7 @@ const map = [
 ];
 
 const boundaries: Boundary[] = [];
+const player: Player = new Player({ position: { x: 40, y: 40 }, velocity: { x: 0, y: 0 } });
 
 map.forEach((raw, i) => {
   raw.forEach((symbol, j) => {
@@ -47,3 +69,5 @@ map.forEach((raw, i) => {
 });
 
 boundaries.forEach((boundary) => boundary.draw());
+
+player.draw();
