@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const canvas = document.querySelector("canvas");
 if (!canvas)
     throw new Error("Canvas not found");
@@ -42,4 +40,5 @@ map.forEach((raw, i) => {
     });
 });
 boundaries.forEach((boundary) => boundary.draw());
+export {};
 //# sourceMappingURL=index.js.map
