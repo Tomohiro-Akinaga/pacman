@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Build outputs (TypeScript compiled files)
+*.js
+*.js.map
+*.d.ts
+*.d.ts.map
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Optional: Environment variables (uncomment if needed)
+# .env
+# .env.local
