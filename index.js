@@ -4,6 +4,9 @@ if (!canvas)
 const ctx = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
+// Make canvas focusable for keyboard events
+canvas.focus();
+canvas.addEventListener("click", () => canvas.focus());
 class Boundary {
     position;
     width;
@@ -29,7 +32,7 @@ class Player {
     constructor({ position, velocity }) {
         this.position = position;
         this.velocity = velocity;
-        this.radius = 10;
+        this.radius = 15;
     }
     draw() {
         if (!ctx)
@@ -40,6 +43,11 @@ class Player {
         ctx.fill();
         ctx.closePath();
     }
+    update() {
+        this.draw();
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+    }
 }
 const map = [
     ["-", "-", "-", "-", "-", "-"],
@@ -49,7 +57,10 @@ const map = [
     ["-", "-", "-", "-", "-", "-"],
 ];
 const boundaries = [];
-const player = new Player({ position: { x: 40, y: 40 }, velocity: { x: 0, y: 0 } });
+const player = new Player({
+    position: { x: Boundary.width + Boundary.width / 2, y: Boundary.height + Boundary.height + 2 },
+    velocity: { x: 0, y: 0 },
+});
 map.forEach((raw, i) => {
     raw.forEach((symbol, j) => {
         switch (symbol) {
@@ -59,7 +70,40 @@ map.forEach((raw, i) => {
         }
     });
 });
+function animate() {
+    requestAnimationFrame(animate);
+    player.update();
+}
+animate();
 boundaries.forEach((boundary) => boundary.draw());
 player.draw();
+window.addEventListener("keydown", ({ key }) => {
+    switch (key) {
+        case "w":
+            player.velocity.y = -5;
+            break;
+        case "a":
+            player.velocity.x = -5;
+            break;
+        case "s":
+            player.velocity.y = 5;
+            break;
+        case "d":
+            player.velocity.x = 5;
+            break;
+    }
+});
+window.addEventListener("keyup", ({ key }) => {
+    switch (key) {
+        case "w":
+        case "s":
+            player.velocity.y = 0;
+            break;
+        case "a":
+        case "d":
+            player.velocity.x = 0;
+            break;
+    }
+});
 export {};
 //# sourceMappingURL=index.js.map
